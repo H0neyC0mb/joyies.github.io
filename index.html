@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>biolink</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="biolink">
+    <meta property="og:description" content="">
+    <link rel="stylesheet" href="assets/biolink2.css">
+    <script src="https://kit.fontawesome.com/8e859d7678.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="overlay">
+        <h1 style="font-size: 25px;">Click to Enter</h1>
+    </div>
+    <video muted="muted" loop="" playsinline="" preload="auto" class="fullscreen bg-video" id="video">
+        <source src="assets/video.mp4" type="video/mp4">
+    </video>
+    <audio id="audio" src="assets/audio.mp3"></audio>
+    <div class="container">
+        <div class="box">
+            <center>
+                <div class="profile-container">
+                    <img class="profile-picture" src="https://i.pinimg.com/564x/76/da/84/76da842ae012d23274f8507ea33723ca.jpg" alt="Profile Picture"><br><br><br>
+                    <div class="name">puppie</div>
+                </div>
+            </center>
+                <div class="social-icons">
+                    <a class="social-icon" href="https://open.spotify.com/user/qd27pj2m1zeu0z4lemir11src" class="button"><i class="fab fa-spotify" style="font-size:30px;"><span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif;">spotify</span></span></i></a>
+                    <a class="social-icon" href="https://www.roblox.com/users/108044847/profile" class="button">
+                      <img src="https://syyn.tax/images/icons/roblox.svg" alt="Roblox Icon" style="width: 30px; height: 30px;">
+                      <span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif; color: #ffffff; filter: drop-shadow(#ffffff); color: #ffffff;">roblox</span>
+                    </a>                  
+                    <a class="social-icon" href="https://github.com/Joyies" class="button"><i class="fab fa-github" style="font-size:30px;"><span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif; color: #ffffff; filter: drop-shadow(#ffffff); color: #ffffff;">github</span></span></i></a>
+                    <a class="social-icon" href="https://t.me/kyual" class="button"><i class="fab fa-telegram" style="font-size:30px;"><span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif;">telegram</span></span></i></a>
+                    <a class="social-icon" href="https://discord.com/users/1128483158573195365" class="button"><i class="fab fa-discord" style="font-size:30px;"><span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif;">discord</span></span></i></a> </div>
+</body>
+
+<!--SCRIPTS-->
+<script>
+    var overlay = document.getElementById("overlay");
+    var audio = document.getElementById("audio");
+
+    overlay.addEventListener("click", function() {
+      
+      overlay.style.transition = "opacity 1s ease-in-out";
+      overlay.style.opacity = "0";
+
+      audio.play();
+      
+      setTimeout(function() {
+        overlay.parentNode.removeChild(overlay);
+      }, 1000);
+
+    });
+</script>
+<script>
+    var overlay = document.getElementById("overlay");
+    var video = document.getElementById("video");
+
+    overlay.addEventListener("click", function() {
+      
+      overlay.style.transition = "opacity 1s ease-in-out";
+      overlay.style.opacity = "0";
+
+      video.play();
+
+      setTimeout(function() {
+        overlay.parentNode.removeChild(overlay);
+      }, 1000);
+
+    });
+</script>
+<script>
+  window.oncontextmenu = function () {
+    return false;
+  }
+  $(document).keydown(function (event) {
+    if (event.keyCode == 123) {
+      return false;
+    }
+    else if ((event.ctrlKey && event.shiftKey && event.keyCode == 73) || (event.ctrlKey && event.shiftKey && event.keyCode == 74)) {
+      return false;
+    }
+  });</script>
+</html>
