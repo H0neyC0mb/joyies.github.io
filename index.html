@@ -1,230 +1,576 @@
-body {
-    font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background: transparent url('dot.png') repeat 0 0;
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>puppje <3</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="puppje <3">
+    <meta property="og:description" content="">
+    <link rel="stylesheet" href="assets/biolink2.css">
+    <script src="https://kit.fontawesome.com/8e859d7678.js" crossorigin="anonymous"></script>
+    <script>
+      var colour="white";
+        var sparkles=100;
+    
+        var x=ox=400;
+        var y=oy=300;
+        var swide=800;
+        var shigh=600;
+        var sleft=sdown=0;
+        var tiny=new Array();
+        var star=new Array();
+        var starv=new Array();
+        var starx=new Array();
+        var stary=new Array();
+        var tinyx=new Array();
+        var tinyy=new Array();
+        var tinyv=new Array();
+    
+        window.onload=function() { if (document.getElementById) {
+          var i, rats, rlef, rdow;
+          for (var i=0; i<sparkles; i++) {
+            var rats=createDiv(3, 3);
+            rats.style.visibility="hidden";
+            rats.style.zIndex="999";
+            document.body.appendChild(tiny[i]=rats);
+            starv[i]=0;
+            tinyv[i]=0;
+            var rats=createDiv(5, 5);
+            rats.style.backgroundColor="transparent";
+            rats.style.visibility="hidden";
+            rats.style.zIndex="999";
+            var rlef=createDiv(1, 5);
+            var rdow=createDiv(5, 1);
+            rats.appendChild(rlef);
+            rats.appendChild(rdow);
+            rlef.style.top="2px";
+            rlef.style.left="0px";
+            rdow.style.top="0px";
+            rdow.style.left="2px";
+            document.body.appendChild(star[i]=rats);
+          }
+          set_width();
+          sparkle();
+        }}
+    
+        function sparkle() {
+          var c;
+          if (Math.abs(x-ox)>1 || Math.abs(y-oy)>1) {
+            ox=x;
+            oy=y;
+            for (c=0; c<sparkles; c++) if (!starv[c]) {
+              star[c].style.left=(starx[c]=x)+"px";
+              star[c].style.top=(stary[c]=y+1)+"px";
+              star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+              star[c].childNodes[0].style.backgroundColor=star[c].childNodes[1].style.backgroundColor=(colour=="random")?newColour():colour;
+              star[c].style.visibility="visible";
+              starv[c]=50;
+              break;
+            }
+          }
+          for (c=0; c<sparkles; c++) {
+            if (starv[c]) update_star(c);
+            if (tinyv[c]) update_tiny(c);
+          }
+          setTimeout("sparkle()", 40);
+        }
+    
+        function update_star(i) {
+          if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+          if (starv[i]) {
+            stary[i]+=1+Math.random()*3;
+            starx[i]+=(i%5-2)/5;
+            if (stary[i]<shigh+sdown) {
+              star[i].style.top=stary[i]+"px";
+              star[i].style.left=starx[i]+"px";
+            }
+            else {
+              star[i].style.visibility="hidden";
+              starv[i]=0;
+              return;
+            }
+          }
+          else {
+            tinyv[i]=50;
+            tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+            tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+            tiny[i].style.width="2px";
+            tiny[i].style.height="2px";
+            tiny[i].style.backgroundColor=star[i].childNodes[0].style.backgroundColor;
+            star[i].style.visibility="hidden";
+            tiny[i].style.visibility="visible"
+          }
+        }
+    
+        function update_tiny(i) {
+          if (--tinyv[i]==25) {
+            tiny[i].style.width="1px";
+            tiny[i].style.height="1px";
+          }
+          if (tinyv[i]) {
+            tinyy[i]+=1+Math.random()*3;
+            tinyx[i]+=(i%5-2)/5;
+            if (tinyy[i]<shigh+sdown) {
+              tiny[i].style.top=tinyy[i]+"px";
+              tiny[i].style.left=tinyx[i]+"px";
+            }
+            else {
+              tiny[i].style.visibility="hidden";
+              tinyv[i]=0;
+              return;
+            }
+          }
+          else tiny[i].style.visibility="hidden";
+        }
+    
+        document.onmousemove=mouse;
+        function mouse(e) {
+          if (e) {
+            y=e.pageY;
+            x=e.pageX;
+          }
+          else {
+            set_scroll();
+            y=event.y+sdown;
+            x=event.x+sleft;
+          }
+        }
+    
+        window.onscroll=set_scroll;
+        function set_scroll() {
+          if (typeof(self.pageYOffset)=='number') {
+            sdown=self.pageYOffset;
+            sleft=self.pageXOffset;
+          }
+          else if (document.body && (document.body.scrollTop || document.body.scrollLeft)) {
+            sdown=document.body.scrollTop;
+            sleft=document.body.scrollLeft;
+          }
+          else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+            sleft=document.documentElement.scrollLeft;
+            sdown=document.documentElement.scrollTop;
+          }
+          else {
+            sdown=0;
+            sleft=0;
+          }
+        }
+    
+        window.onresize=set_width;
+        function set_width() {
+          var sw_min=999999;
+          var sh_min=999999;
+          if (document.documentElement && document.documentElement.clientWidth) {
+            if (document.documentElement.clientWidth>0) sw_min=document.documentElement.clientWidth;
+            if (document.documentElement.clientHeight>0) sh_min=document.documentElement.clientHeight;
+          }
+          if (typeof(self.innerWidth)=='number' && self.innerWidth) {
+            if (self.innerWidth>0 && self.innerWidth<sw_min) sw_min=self.innerWidth;
+            if (self.innerHeight>0 && self.innerHeight<sh_min) sh_min=self.innerHeight;
+          }
+          if (document.body.clientWidth) {
+            if (document.body.clientWidth>0 && document.body.clientWidth<sw_min) sw_min=document.body.clientWidth;
+            if (document.body.clientHeight>0 && document.body.clientHeight<sh_min) sh_min=document.body.clientHeight;
+          }
+          if (sw_min==999999 || sh_min==999999) {
+            sw_min=800;
+            sh_min=600;
+          }
+          swide=sw_min;
+          shigh=sh_min;
+        }
+    
+        function createDiv(height, width) {
+          var div=document.createElement("div");
+          div.style.position="absolute";
+          div.style.height=height+"px";
+          div.style.width=width+"px";
+          div.style.overflow="hidden";
+          return (div);
+        }
+    
+        function newColour() {
+          var c=new Array();
+          c[0]=255;
+          c[1]=Math.floor(Math.random()*256);
+          c[2]=Math.floor(Math.random()*(256-c[1]/2));
+          c.sort(function(){return (0.5 - Math.random());});
+          return ("rgb("+c[0]+", "+c[1]+", "+c[2]+")");
+        }
+      </script>
+</head>
+<body>
+  <style>
+    .snowflake {
+      color: #fff;
+      font-size: 1em;
+      font-family: Arial, sans-serif;
+      text-shadow: 0 0 5px #000;
+    }
+     
+    .snowflake,.snowflake .inner{animation-iteration-count:infinite;animation-play-state:running}@keyframes snowflakes-fall{0%{transform:translateY(0)}100%{transform:translateY(110vh)}}@keyframes snowflakes-shake{0%,100%{transform:translateX(0)}50%{transform:translateX(80px)}}.snowflake{position:fixed;top:-10%;z-index:9999;-webkit-user-select:none;user-select:none;cursor:default;animation-name:snowflakes-shake;animation-duration:3s;animation-timing-function:ease-in-out}.snowflake .inner{animation-duration:10s;animation-name:snowflakes-fall;animation-timing-function:linear}.snowflake:nth-of-type(0){left:1%;animation-delay:0s}.snowflake:nth-of-type(0) .inner{animation-delay:0s}.snowflake:first-of-type{left:10%;animation-delay:1s}.snowflake:first-of-type .inner,.snowflake:nth-of-type(8) .inner{animation-delay:1s}.snowflake:nth-of-type(2){left:20%;animation-delay:.5s}.snowflake:nth-of-type(2) .inner,.snowflake:nth-of-type(6) .inner{animation-delay:6s}.snowflake:nth-of-type(3){left:30%;animation-delay:2s}.snowflake:nth-of-type(11) .inner,.snowflake:nth-of-type(3) .inner{animation-delay:4s}.snowflake:nth-of-type(4){left:40%;animation-delay:2s}.snowflake:nth-of-type(10) .inner,.snowflake:nth-of-type(4) .inner{animation-delay:2s}.snowflake:nth-of-type(5){left:50%;animation-delay:3s}.snowflake:nth-of-type(5) .inner{animation-delay:8s}.snowflake:nth-of-type(6){left:60%;animation-delay:2s}.snowflake:nth-of-type(7){left:70%;animation-delay:1s}.snowflake:nth-of-type(7) .inner{animation-delay:2.5s}.snowflake:nth-of-type(8){left:80%;animation-delay:0s}.snowflake:nth-of-type(9){left:90%;animation-delay:1.5s}.snowflake:nth-of-type(9) .inner{animation-delay:3s}.snowflake:nth-of-type(10){left:25%;animation-delay:0s}.snowflake:nth-of-type(11){left:65%;animation-delay:2.5s}
+    </style>
+    <div class="snowflakes" aria-hidden="true">
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+      <div class="snowflake">
+        <div class="inner">♥</div>
+      </div>
+    </div>
+    <div id="overlay">
+        <h1 style="font-size: 25px;">click ^,..,^ </h1>
+    </div>
+    <video muted="muted" loop="" playsinline="" preload="auto" class="fullscreen bg-video" id="video">
+        <source src="assets/video.mp4" type="video/mp4">
+    </video>
+    <audio id="audio" src="assets/audio.mp3"></audio>
+    <div class="container">
+        <div class="box">
+            <center>
+                <div class="profile-container">
+                    <img class="profile-picture" src="https://i.postimg.cc/Pr8vfz48/76da842ae012d23274f8507ea33723ca-removebg-preview-2.png" alt="Profile Picture"><br><br><br>
+                    <div class="name">puppie</div>
+                </div>
+            </center>
+            <div style="position: fixed; top: 150%; left: 50%; transform: translate(-50%, -50%);">
+              <img src="https://lanyard-profile-readme.vercel.app/api/1128483158573195365?bg=2B2B2B" style="opacity: 0.8;"> 
+            </div>
+                <div class="social-icons">
+                    <a class="social-icon" href="https://open.spotify.com/user/qd27pj2m1zeu0z4lemir11src" class="button"><i class="fab fa-spotify" style="font-size:30px;"><span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif;">Spotify</span></span></i></a>
+                    <a class="social-icon" href="https://www.roblox.com/users/108044847/profile" class="button">
+                      <img src="https://syyn.tax/images/icons/roblox.svg" alt="Roblox Icon" style="width: 30px; height: 30px;">
+                      <span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif; color: #ffffff; filter: drop-shadow(#ffffff); color: #ffffff;">Roblox</span>
+                    </a>                  
+                    <a class="social-icon" href="https://github.com/Joyies" class="button"><i class="fab fa-github" style="font-size:30px;"><span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif; color: #ffffff; filter: drop-shadow(#ffffff); color: #ffffff;">Github</span></span></i></a>
+                    <a class="social-icon" href="https://t.me/kyual" class="button"><i class="fab fa-telegram" style="font-size:30px;"><span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif;">Telegram</span></span></i></a>
+                    <a class="social-icon" href="https://discord.com/users/1128483158573195365" class="button"><i class="fab fa-discord" style="font-size:30px;"><span class="tooltip" style="font-size: 15px; font-family: Tahoma, sans-serif;">Discord</span></span></i>
+                </div>
+                <div class="container">
+                  <img src="https://i.postimg.cc/1tQ5Bzz3/eye-icon-design-free-png-removebg-preview.png" alt="profile views" style="width: 30px; height: 30px;">
+                  <div class="text-container">
+                    <span class="tooltip" style="font-size: 10px; font-family: Tahoma, sans-serif; color: #ffffff; filter: drop-shadow(#ffffff);">Profile Views</span>
+                    <span style="font-size: 12px; font-family: Tahoma, sans-serif; color: #ffffff; margin-left: 10px;">10,619</span>
+                  </div>
+                </div>
+</body>
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: transparent;
-}
+<!--SCRIPTS-->
+<script>
+  var overlay = document.getElementById("overlay");
+  var audio = document.getElementById("audio");
 
-.box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(91, 91, 91, 0.1);
-    padding: 30px;
-    border-radius: 30px;
-    backdrop-filter: blur(10px);
-    width: 500px;
-    height: auto;
-}
+  overlay.addEventListener("click", function() {
 
-.profile-picture {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 20px;
-}
-.name {
-    font-size: 24px;
-    font-weight: bold;
-}
-.social-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-}
-.social-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    margin: 0 10px;
-    background-color: transparent;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
+    overlay.style.transition = "opacity 1s ease-in-out";
+    overlay.style.opacity = "0";
 
-#pattern {
-    background: transparent url('dot.png') repeat 0 0;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    z-index: -1;
-    opacity: 1;
+    audio.play();
+
+    setTimeout(function() {
+      overlay.parentNode.removeChild(overlay);
+    }, 1000);
+
+  });
+
+  audio.addEventListener("ended", function() {
+    audio.play();
+  });
+</script>
+</script>
+<script>
+    var overlay = document.getElementById("overlay");
+    var video = document.getElementById("video");
+
+    overlay.addEventListener("click", function() {
+      
+      overlay.style.transition = "opacity 1s ease-in-out";
+      overlay.style.opacity = "0";
+
+      video.play();
+
+      setTimeout(function() {
+        overlay.parentNode.removeChild(overlay);
+      }, 1000);
+
+    });
+</script>
+<script>
+  window.oncontextmenu = function () {
+    return false;
   }
-  
-  #pattern,
-  #background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  $(document).keydown(function (event) {
+    if (event.keyCode == 123) {
+      return false;
+    }
+    else if ((event.ctrlKey && event.shiftKey && event.keyCode == 73) || (event.ctrlKey && event.shiftKey && event.keyCode == 74)) {
+      return false;
+    }
+  });</script>
+  <script>
+    function fairyDustCursor(options) {
+let possibleColors = (options && options.colors) || [
+"#FFFFFF",
+];
+let hasWrapperEl = options && options.element;
+let element = hasWrapperEl || document.body;
+
+let width = window.innerWidth;
+let height = window.innerHeight;
+const cursor = { x: width / 2, y: width / 2 };
+const lastPos = { x: width / 2, y: width / 2 };
+const particles = [];
+const canvImages = [];
+let canvas, context, animationFrame;
+
+const char = "*";
+
+const prefersReducedMotion = window.matchMedia(
+"(prefers-reduced-motion: reduce)"
+);
+
+// Re-initialise or destroy the cursor when the prefers-reduced-motion setting changes
+prefersReducedMotion.onchange = () => {
+if (prefersReducedMotion.matches) {
+  destroy();
+} else {
+  init();
+}
+};
+
+function init() {
+// Don't show the cursor trail if the user has prefers-reduced-motion enabled
+if (prefersReducedMotion.matches) {
+  console.log(
+    "This browser has prefers reduced motion turned on, so the cursor did not init"
+  );
+  return false;
+}
+
+canvas = document.createElement("canvas");
+context = canvas.getContext("2d");
+canvas.style.top = "0px";
+canvas.style.left = "0px";
+canvas.style.pointerEvents = "none";
+
+if (hasWrapperEl) {
+  canvas.style.position = "absolute";
+  element.appendChild(canvas);
+  canvas.width = element.clientWidth;
+  canvas.height = element.clientHeight;
+} else {
+  canvas.style.position = "fixed";
+  element.appendChild(canvas);
+  canvas.width = width;
+  canvas.height = height;
+}
+
+context.font = "21px serif";
+context.textBaseline = "middle";
+context.textAlign = "center";
+
+possibleColors.forEach((color) => {
+  let measurements = context.measureText(char);
+  let bgCanvas = document.createElement("canvas");
+  let bgContext = bgCanvas.getContext("2d");
+
+  bgCanvas.width = measurements.width;
+  bgCanvas.height =
+    measurements.actualBoundingBoxAscent +
+    measurements.actualBoundingBoxDescent;
+
+  bgContext.fillStyle = color;
+  bgContext.textAlign = "center";
+  bgContext.font = "21px serif";
+  bgContext.textBaseline = "middle";
+  bgContext.fillText(
+    char,
+    bgCanvas.width / 2,
+    measurements.actualBoundingBoxAscent
+  );
+
+  canvImages.push(bgCanvas);
+});
+
+bindEvents();
+loop();
+}
+
+// Bind events that are needed
+function bindEvents() {
+element.addEventListener("mousemove", onMouseMove);
+element.addEventListener("touchmove", onTouchMove, { passive: true });
+element.addEventListener("touchstart", onTouchMove, { passive: true });
+window.addEventListener("resize", onWindowResize);
+}
+
+function onWindowResize(e) {
+width = window.innerWidth;
+height = window.innerHeight;
+
+if (hasWrapperEl) {
+  canvas.width = element.clientWidth;
+  canvas.height = element.clientHeight;
+} else {
+  canvas.width = width;
+  canvas.height = height;
+}
+}
+
+function onTouchMove(e) {
+if (e.touches.length > 0) {
+  for (let i = 0; i < e.touches.length; i++) {
+    addParticle(
+      e.touches[i].clientX,
+      e.touches[i].clientY,
+      canvImages[Math.floor(Math.random() * canvImages.length)]
+    );
+  }
+}
+}
+
+function onMouseMove(e) {
+window.requestAnimationFrame(() => {
+  if (hasWrapperEl) {
+    const boundingRect = element.getBoundingClientRect();
+    cursor.x = e.clientX - boundingRect.left;
+    cursor.y = e.clientY - boundingRect.top;
+  } else {
+    cursor.x = e.clientX;
+    cursor.y = e.clientY;
   }
 
-.social-icon:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-}
-.social-icon i {
-    font-size: 30px;
-    color: #ffffff;
-    transition: all 0.3s ease;
-}
-.social-icon:hover i {
-    color: #ffffff;
-}
-.social-icon .tooltip {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: transparent;
-    color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-family: Tahoma, sans-serif;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
-}
-.social-icon:hover .tooltip {
-    top: -40px;
-    opacity: 1;
-}
+  const distBetweenPoints = Math.hypot(
+    cursor.x - lastPos.x,
+    cursor.y - lastPos.y
+  );
 
-a:hover {
+  if (distBetweenPoints > 1.5) {
+    addParticle(
+      cursor.x,
+      cursor.y,
+      canvImages[Math.floor(Math.random() * possibleColors.length)]
+    );
 
-    transition:.4s!important;
-
-    color:#ffffff!important;
-
-}
-
-#typewriter {
-    position: relative;
-    font-family: 'Roboto Mono', monospace;
-    text-shadow: 0 0 0.10em white;
-}
-
-::selection {
-    background-color: transparent;
-}
-
-::selection {
-    background-color: transparent;
-    color: rgb(255, 255, 255);
-}
-
-#typewriter {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Roboto Mono', monospace;
-    text-shadow: 0 0 0.10em white;
-    width: 200px;
-}
-
-*{
-    cursor:url(https://cur.cursors-4u.net/cursors/cur-4/cur330.cur),auto!important
-}
-
-
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-#overlay h1 {
-    color: white;
-    font-size: 4em;
-    text-align: center;
-    text-shadow: 2px 2px black;
-    cursor: pointer;
-}
-
-.name {
-    font-size: 45px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    animation: sparkly 3s infinite;
-    color: #ffffff;
-    text-shadow: #ffffff;
-    filter: drop-shadow(#ffffff)
-}
-
-.social-icon:hover .tooltip {
-    opacity: 1;
-    visibility: visible;
-}
-
-.profile-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: auto;
-}
-.profile-picture {
-    margin-right: 10px;
-}
-.name {
-    font-family: Tahoma, sans-serif;
-    margin-left: 50px;
-}
-
-video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-}
-
-@keyframes sparkly {
-    50% {
-        color: #ffffff;
-        text-shadow: 0 0 20px rgb(197, 197, 197);
-        filter: drop-shadow(8px 8px 10px #ffffff);
-}
-}
-.container {
-    display: flex;
-    align-items: center;
+    lastPos.x = cursor.x;
+    lastPos.y = cursor.y;
   }
-  
-  .text-container {
-    display: flex;
-    align-items: center;
-    margin-left: 80px;
-    margin-top: -23px;
+});
+}
+
+function addParticle(x, y, color) {
+particles.push(new Particle(x, y, color));
+}
+
+function updateParticles() {
+if (particles.length == 0) {
+  return;
+}
+
+context.clearRect(0, 0, width, height);
+
+// Update
+for (let i = 0; i < particles.length; i++) {
+  particles[i].update(context);
+}
+
+// Remove dead particles
+for (let i = particles.length - 1; i >= 0; i--) {
+  if (particles[i].lifeSpan < 0) {
+    particles.splice(i, 1);
   }
-  
+}
+
+if (particles.length == 0) {
+  context.clearRect(0, 0, width, height);
+}
+}
+
+function loop() {
+updateParticles();
+animationFrame = requestAnimationFrame(loop);
+}
+
+function destroy() {
+canvas.remove();
+cancelAnimationFrame(animationFrame);
+element.removeEventListener("mousemove", onMouseMove);
+element.removeEventListener("touchmove", onTouchMove);
+element.removeEventListener("touchstart", onTouchMove);
+window.addEventListener("resize", onWindowResize);
+};
+
+function Particle(x, y, canvasItem) {
+const lifeSpan = Math.floor(Math.random() * 30 + 60);
+this.initialLifeSpan = lifeSpan; //
+this.lifeSpan = lifeSpan; //ms
+this.velocity = {
+  x: (Math.random() < 0.5 ? -1 : 1) * (Math.random() / 2),
+  y: Math.random() * 0.7 + 0.9,
+};
+this.position = { x: x, y: y };
+this.canv = canvasItem;
+
+this.update = function (context) {
+  this.position.x += this.velocity.x;
+  this.position.y += this.velocity.y;
+  this.lifeSpan--;
+
+  this.velocity.y += 0.02;
+
+  const scale = Math.max(this.lifeSpan / this.initialLifeSpan, 0);
+
+  context.drawImage(
+    this.canv,
+    this.position.x - (this.canv.width / 2) * scale,
+    this.position.y - this.canv.height / 2,
+    this.canv.width * scale,
+    this.canv.height * scale
+  );
+};
+}
+
+init();
+
+return {
+destroy: destroy
+}
+}
+</script>
+  <script src="https://shock.lol/src/js/cursorEffects.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script><style>.particles-js {margin: 0;position: fixed;width: 100%;height: 100%;z-index: 1;top: 0;left: 0;padding: 0;}.main-container {z-index: 2 !important;}</style><script>particlesJS("particles-js",{particles:{number:{value:100,density:{enable:!0,value_area:800}},color:{value:"#ffffff"},shape:{type:"circle"},opacity:{value:.8,random:!0,anim:{enable:!0,speed:1,opacity_min:.1,sync:!1}},size:{value:5,random:!0,anim:{enable:!0,speed:2,size_min:1,sync:!1}},line_linked:{enable:!1},move:{enable:!0,speed:1,direction:"bottom",random:!0,straight:!1,out_mode:"out",bounce:!1}},interactivity:{detect_on:"canvas",events:{onhover:{enable:!1},onclick:{enable:!1},resize:!0},modes:{grab:{distance:400,line_linked:{opacity:1}},bubble:{distance:250,size:0,duration:2,opacity:0},repulse:{distance:400,duration:.4},push:{particles_nb:4},remove:{particles_nb:2}}},retina_detect:!0});</script>
+ 
+  </html>
