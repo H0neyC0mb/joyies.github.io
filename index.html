@@ -261,6 +261,88 @@
     <div class="container">
         <div class="box">
             <center>
+              <!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #typewriter {
+      position: absolute;
+      top: 49%;
+      left: 69%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-family: "Courier New", monospace;
+      font-size: 15px;
+      opacity: 1;
+    }
+
+    .fade-out {
+      animation: fade-out 2s linear forwards;
+    }
+
+    @keyframes typewriter-anim {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 430px;
+      }
+    }
+
+    @keyframes fade-out {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="typewriter">Most Desired. only id: 1128483158573195365</div>
+
+  <script>
+    const typewriterText = "Most Desired. only id: 1128483158573195365";
+    const typewriter = document.getElementById("typewriter");
+    let timeoutId;
+
+    function animateTypewriter() {
+      let i = 0;
+      typewriter.textContent = "";
+      clearTimeout(timeoutId);
+
+      function type() {
+        if (i < typewriterText.length) {
+          typewriter.textContent += typewriterText.charAt(i);
+          i++;
+          timeoutId = setTimeout(type, 50);
+        } else {
+          timeoutId = setTimeout(erase, 2000);
+        }
+      }
+
+      function erase() {
+        let textLength = typewriter.textContent.length;
+        if (textLength > 0) {
+          typewriter.textContent = typewriterText.substring(0, textLength - 1);
+          timeoutId = setTimeout(erase, 30);
+        } else {
+          typewriter.classList.add('fade-out');
+          typewriter.addEventListener('animationend', () => {
+            typewriter.classList.remove('fade-out');
+            animateTypewriter();
+          }, {once: true});
+        }
+      }
+
+      type();
+    }
+
+    animateTypewriter();
+  </script>
+</body>
+</html>
                 <div class="profile-container">
                     <img class="profile-picture" src="https://i.postimg.cc/Pr8vfz48/76da842ae012d23274f8507ea33723ca-removebg-preview-2.png" alt="Profile Picture"><br><br><br>
                     <div class="name">puppie</div>
